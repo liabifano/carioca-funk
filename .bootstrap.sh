@@ -39,6 +39,39 @@ function rename-inside () {
 }
 
 
+function remove-secrets () {
+
+    sed -i.bak "/env:/d" .travis.yml && sed -i.bak "/global/d" .travis.yml && sed -i.bak "/- secure/d" .travis.yml
+    rm -- ".travis.yml.bak" || true
+
+}
+
+
+function get-secrets () {
+
+    travis login --pro --auto
+
+    if [ -z "$DOCKER_USERNAME" ]
+    then
+        echo "Please, enter your dockerhub login"
+        echo
+        read DOCKER_USERNAME
+    fi
+
+    travis encrypt --com DOCKER_USERNAME=$DOCKER_USERNAME --add
+
+    if [ -z "$DOCKER_PASSWORD" ]
+    then
+        echo "Please, enter you dockerhub password - no one want to steal it"
+        echo
+        read DOCKER_PASSWORD
+    fi
+
+    travis encrypt --com DOCKER_PASSWORD=$DOCKER_PASSWORD --add
+
+}
+
+
 function undo-rename-inside() {
 
     for f in $FILES
@@ -81,12 +114,20 @@ function up () {
 
 }
 
+function generate-travis-secrets () {
+
+    (remove-secrets)
+    (get-secrets)
+
+}
+
 
 function down () {
 
     (check-inputs)
     (undo-rename-inside)
     (undo-rename-folders)
+    (remove-secrets)
 
 }
 
@@ -98,6 +139,10 @@ case "${@: -1}" in
     ;;
   (down)
       down
+    exit 0
+    ;;
+  (travis)
+      generate-travis-secrets
     exit 0
     ;;
   (*)

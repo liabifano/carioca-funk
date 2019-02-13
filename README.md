@@ -1,6 +1,4 @@
-Boilerplate to setup python projects
+[![Build Status](https://travis-ci.com/liabifano/carioca-funk.svg?branch=master)](https://travis-ci.com/liabifano/carioca-funk)
 
 
-```bash
-bash .bootstrap.sh -j my-project-name up
-```
+# Carioca Funk

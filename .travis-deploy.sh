@@ -3,3 +3,4 @@
 set -eo pipefail
 
 make build
+make push

@@ -31,7 +31,7 @@ test: clean-pyc
 	bash -c "source activate $(PROJECT_NAME) &&  py.test --verbose --color=yes $(TEST_PATH)"
 
 
-install: clean
+install: clean-build clean-pyc
 	-@conda env remove -yq -n $(PROJECT_NAME) # ignore if fails
 	@conda create -y --name $(PROJECT_NAME) --file conda.txt
 	@echo "\n --- Creating env: $(PROJECT_NAME) in $(shell which conda) ---\n"

@@ -7,8 +7,9 @@ TEST_PATH=./
 
 
 help:
-	@echo "install - install project in dev mode using conda"
-	@echo "test -  run tests quickly within env: $(PROJECT_NAME)"
+	@echo "install - installs project in dev mode using conda"
+	@echo "test -  runs tests quickly within env: $(PROJECT_NAME)"
+	@echo "get-data - scraps vagalume.com to get musics related with carioca funk"
 	@echo "clean-build - remove build artifacts"
 	@echo "clean-pyc - remove python artifacts"
 
@@ -37,6 +38,10 @@ install: clean-build clean-pyc
 	@echo "\n --- Creating env: $(PROJECT_NAME) in $(shell which conda) ---\n"
 	@echo "\n--- Installing dependencies ---\n"
 	bash -c "source activate $(PROJECT_NAME) && pip install -e . && pip install -U -r requirements.txt && source deactivate"
+
+
+get-data:
+	bash -c "source activate $(PROJECT_NAME) && scrapy runspider src/$(PROJECT_NAME)/scraper.py && source deactivate"
 
 
 clean-build:

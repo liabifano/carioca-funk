@@ -10,6 +10,7 @@ setup(name='carioca-funk',
       install_requires=[
           'numpy==1.15.1',
           'pytest==3.7.4',
+          "Scrapy==1.6.0",
       ],
       include_package_data=True,
       zip_safe=False)

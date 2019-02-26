@@ -35,7 +35,6 @@ class FunkSpider(scrapy.Spider):
     path_songs = os.path.join(path_data, 'songs.txt')
     path_popularity = os.path.join(path_data, 'popularity.txt')
 
-
     def parse_popularity(self, response):
         """
         Parses http response and extracts the year which the singer appeared
@@ -50,10 +49,9 @@ class FunkSpider(scrapy.Spider):
 
         popularity = {'singer_name': singer_name,
                       'year': year_showup}
-
+pp
         with open(self.path_popularity, 'a+') as outfile:
             outfile.write(json.dumps(popularity) + '\n')
-
 
     def parse_songs(self, response):
         """
@@ -77,7 +75,6 @@ class FunkSpider(scrapy.Spider):
 
         with open(self.path_songs, 'a+') as outfile:
             outfile.write(json.dumps(songs_info) + '\n')
-
 
     def parse_singers(self, response):
         """
@@ -126,7 +123,6 @@ class FunkSpider(scrapy.Spider):
                                  callback=self.parse_songs,
                                  errback=self.error)
 
-
     def error(self, failure):
         self.logger.error(repr(failure))
 
@@ -141,7 +137,6 @@ class FunkSpider(scrapy.Spider):
         elif failure.check(TimeoutError, TCPTimedOutError):
             request = failure.request
             self.logger.error('TimeoutError on %s', request.url)
-
 
     def parse(self, response):
         clean_data(self.path_data)

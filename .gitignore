@@ -109,3 +109,26 @@ venv.bak/
 
 resources/
 notebooks/
+
+# Logs
+logs
+*.log
+
+.DS_Store
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+lib-cov
+
+coverage
+
+.grunt
+
+.lock-wscript
+
+build/
+
+node_modules

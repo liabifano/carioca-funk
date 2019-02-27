@@ -1,5 +1,4 @@
 import os
-import shutil
 import json
 
 import scrapy
@@ -7,22 +6,11 @@ from scrapy.spidermiddlewares.httperror import HttpError
 from twisted.internet.error import TimeoutError, TCPTimedOutError, DNSLookupError
 
 import settings as s
+import utils as u
 
 
 LANG_LOOKUP = {'1': 'portuguese', '2': 'english', '3': 'spanish'}
 
-
-def clean_data(path):
-    """
-    Delete folder if exists and creates a new folder with no data
-
-    :param path: string with the path
-    """
-    if not os.path.exists(path):
-        os.makedirs(path)
-    else:
-        shutil.rmtree(path)
-        os.makedirs(path)
 
 
 class FunkSpider(scrapy.Spider):
@@ -49,7 +37,7 @@ class FunkSpider(scrapy.Spider):
 
         popularity = {'singer_name': singer_name,
                       'year': year_showup}
-pp
+
         with open(self.path_popularity, 'a+') as outfile:
             outfile.write(json.dumps(popularity) + '\n')
 
@@ -139,7 +127,7 @@ pp
             self.logger.error('TimeoutError on %s', request.url)
 
     def parse(self, response):
-        clean_data(self.path_data)
+        u.clean_folder(self.path_data)
 
         query_singers = '//div[@class="moreNamesContainer h16"]/ul/li/a/@href'
         singer_urls = response.xpath(query_singers).extract()

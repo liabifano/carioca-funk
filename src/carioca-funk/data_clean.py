@@ -53,8 +53,8 @@ if __name__ == '__main__':
 
 
     all_songs['styles'] = (all_songs.details
-                       .apply(lambda x: [s['descr'] for s in x['style']])
-                       .apply(lambda x: list(set(['Funk Carioca' if s=='Funk' else s for s in x]))))
+                           .apply(lambda x: [s['descr'] for s in x['style']])
+                           .apply(lambda x: list(set(['Funk Carioca' if s=='Funk' else s for s in x]))))
     songs = all_songs[all_songs.styles.apply(lambda x: 'Funk Carioca' in x)]
     songs['lyrics_ok'] = all_songs.lyrics.apply(clean_lyrics)
     songs['singer_id'] = songs.details.apply(lambda x: x['discus_url'].split('/')[1])

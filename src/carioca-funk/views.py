@@ -8,7 +8,6 @@ import utils as u
 import data_clean as data_clean
 
 
-
 def view_n_songs(data):
     view = pd.DataFrame(data
                         .groupby(['singer_name', 'photo_url', 'singer_styles', 'date'])
@@ -26,6 +25,23 @@ def view_n_styles(data):
             .sort_values('count', ascending=False)[['style', 'count']])
 
     view.to_csv(os.path.join(s.PATH_VIEWS, 'n_styles.csv'), index=False)
+
+
+def view_n_words(data):
+    view = []
+    for s in data.singer_name.unique():
+        filtered = data[data.singer_name == s]
+        tops = filtered[filtered.is_top_song] if len(filtered.top_songs.iloc[0]) >=25 else pd.DataFrame()
+
+        d = {'singer_name': s,
+             'photo_url': filtered.photo_url.iloc[0],
+             'n_songs': len(filtered),
+             'n_unique_words': len(set(sum(filtered.lyrics_ok.values, []))),
+             'n_unique_words_top25': len(set(sum(tops.lyrics_ok.values, []))) if len(tops)>0 else np.nan}
+
+        view.append(d)
+
+    pd.DataFrame(view).to_csv(os.path.join(s.PATH_VIEWS, 'n_words.csv'), index=False)
 
 
 if __name__ == '__main__':

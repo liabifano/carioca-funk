@@ -1,5 +1,6 @@
 import os
 import json
+import ast
 import pandas as pd
 
 from datetime import datetime
@@ -57,12 +58,17 @@ if __name__ == '__main__':
                            .apply(lambda x: list(set(['Funk Carioca' if s=='Funk' else s for s in x]))))
     songs = all_songs[all_songs.styles.apply(lambda x: 'Funk Carioca' in x)]
     songs['lyrics_ok'] = all_songs.lyrics.apply(clean_lyrics)
-    songs['singer_id'] = songs.details.apply(lambda x: x['discus_url'].split('/')[1])
+    songs['discus_url'] = songs.details.apply(lambda x: x['discus_url'])
+    songs['singer_id'] = songs.discus_url.apply(lambda x: x.split('/')[1])
 
     singers = singers[singers.song_names.apply(lambda x: x!=[])]
     singers['singer_id'] = singers.photo_url.str.split('/').apply(lambda x: x[3])
-
     data = songs.merge(singers).merge(popularity)
+
+    data['is_top_song'] = data.apply(lambda x: x['discus_url'] in [s[1] for s in x['top_songs']], axis=1)
+
+    data['n_words'] = data.lyrics_ok.apply(len)
+    data['n_unique_words'] = data.lyrics_ok.apply(lambda x: len(set(x)))
 
     print('Dataset shape: {}'.format(str(data.shape)))
     print('Dataset is here: {}'.format(PATH_TREATEDDATA))

@@ -8,10 +8,7 @@ from twisted.internet.error import TimeoutError, TCPTimedOutError, DNSLookupErro
 import settings as s
 import utils as u
 
-
 LANG_LOOKUP = {'1': 'portuguese', '2': 'english', '3': 'spanish'}
-
-
 
 class FunkSpider(scrapy.Spider):
     name = 'funk'

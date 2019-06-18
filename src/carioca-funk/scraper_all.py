@@ -38,7 +38,8 @@ class VagaSpider(scrapy.Spider):
             self.logger.error('TimeoutError on %s', request.url)
 
 
-    def parse_songs(self, response):
+    def parse_song(self, response):
+        query = '//div[@id="lyrics"]/text()'
         return
 
 
@@ -50,7 +51,7 @@ class VagaSpider(scrapy.Spider):
         n_songs = len(songs_urls)
 
         if n_songs==25:
-            return
+            yield 
 
 
     def parse_singers(self, response):

@@ -18,7 +18,7 @@ setup(name='carioca_funk',
           'flake8==3.7.6',
           'epc==0.0.5',
           'pandas==0.23.0',
-          "nltk==3.3",
+          "nltk==3.4.5",
       ],
       include_package_data=True,
       zip_safe=False)

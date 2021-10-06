@@ -10,7 +10,7 @@ setup(name='carioca_funk',
       install_requires=[
           'numpy==1.15.1',
           'pytest==3.7.4',
-          'Scrapy==1.6.0',
+          'Scrapy==1.8.1',
           'jedi==0.13.2',
           'rope==0.11.0',
           'autopep8==1.4',

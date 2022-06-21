@@ -8,7 +8,7 @@ setup(name='carioca_funk',
       packages=find_packages('src'),
       version='0.0.1',
       install_requires=[
-          'numpy==1.15.1',
+          'numpy==1.22.0',
           'pytest==3.7.4',
           'Scrapy==1.6.0',
           'jedi==0.13.2',
